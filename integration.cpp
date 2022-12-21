@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define endl '\n'
-
-const double f1_ans = 2.3026;
 
 double power(double num, int exp)
 {
@@ -17,26 +14,33 @@ double power(double num, int exp)
     return res;
 }
 
-// func : f(x), lower : a, upper : b, interval : h
-double trapezoidal(double (*func)(double), double lower, double upper, int n)
-{
-    double interval = (upper - lower) / (double) n;
-    double integration = func(lower) + func(upper);
+/*
+f : fungsi f(x)
+a : batas bawah integral
+b : batas atas integral
+n : banyak pias
+h : selisih x
+r : hasil integral
+*/
 
-    for(double i = lower + interval; i < upper; i += interval){
-        integration += 2 * func(i);
-    }
-    return integration * interval / 2;
+double trapezoidal(double (*f)(double), double a, double b, int n)
+{
+    double h = (b - a) / (double) n;
+    double r = f(a) + f(b);
+
+    for(double i = a + h; i < b; i += h)
+        r += 2 * f(i);
+    return r * h / 2;
 }
 
-double romberg(double (*func)(double), double a, double b, int n)
+double romberg(double (*f)(double), double a, double b, int n)
 {
     double h[n + 1], r[n + 1][n + 1];
 
     for (int i = 1; i <= n; ++i){
         h[i] = (b - a) / power(2, i - 1);
     }
-    r[1][1] = h[1] / 2 * (func(a) + func(b));
+    r[1][1] = h[1] / 2 * (f(a) + f(b));
 
     for(int i = 2; i <= n; ++i)
     {
@@ -44,7 +48,7 @@ double romberg(double (*func)(double), double a, double b, int n)
         int batas = power(2, i - 2);
 
         for(int k = 1; k <= batas; ++k){
-            coef += func(a + (2 * k - 1) * h[i]);
+            coef += f(a + (2 * k - 1) * h[i]);
         }
         r[i][1] = (r[i - 1][1] + h[i - 1] * coef) / 2;
     }
@@ -62,28 +66,41 @@ double f1(double x)
     return 1 / x;
 }
 
-// double f2(double x)
-// {
-
-// }
-
-void calcError(double result, double intended)
+double f2(double x)
 {
-    double diff = abs(result - intended);
-    double error = (diff / intended) * 100;
-    cout << fixed << setprecision(3) << error << " %\n";
+    return sqrt(x);
+}
+
+double f3(double x)
+{
+    return sin(x);
+}
+
+double calcError(double result, double expected)
+{
+    double diff = abs(result - expected);
+    double error = (diff / expected) * 100;
+    return error;   
+}
+
+const double f_ans[4] = {0, 2.3026, 5.3333, 0.29289};
+
+void solve(double (*f)(double), double a, double b, int n, int idx)
+{
+    double f_traped = trapezoidal(f, a, b, n);
+    double f_romberg = romberg(f, a, b, n);
+
+    cout << "Error for function f" << idx << " using Trapezoidal Method : ";
+    cout << fixed << setprecision(3) << calcError(f_traped, f_ans[idx]) << " %\n";
+
+    cout << "Error for function f" << idx << " using Romberg Method     : ";
+    cout << fixed << setprecision(3) << calcError(f_romberg, f_ans[idx]) << " %\n\n";
 }
 
 int main()
 {
-    double f1_traped = trapezoidal(&f1, 1, 10, 5);
-    double f1_romberg = romberg(&f1, 1, 10, 5);
-
-    cout << "Error for function f1 using Trapezoidal Method : ";
-    calcError(f1_traped, f1_ans);
-    cout << "Error for function f1 using Romberg Method     : ";
-    calcError(f1_romberg, f1_ans);
-    cout << endl;
-
+    solve(&f1, 1, 10, 5, 1);
+    solve(&f2, 0, 4, 4, 2);
+    solve(&f3, 0, 7.0 * M_PI / 4.0, 7, 3);
     return 0;
 }
