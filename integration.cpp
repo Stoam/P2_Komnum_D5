@@ -90,11 +90,16 @@ void solve(double (*f)(double), double a, double b, int n, int idx)
     double f_traped = trapezoidal(f, a, b, n);
     double f_romberg = romberg(f, a, b, n);
 
-    cout << "Error for function f" << idx << " using Trapezoidal Method : ";
+    cout << "\nIntegration Result for Function f" << idx << " using Analytical Method  : " << f_ans[idx];
+    cout << "\nIntegration Result for Function f" << idx << " using Trapezoidal Method : " << f_traped;
+    cout << "\nIntegration Result for Function f" << idx << " using Romberg Method     : " << f_romberg << "\n\n";
+
+    cout << "Error for Function f" << idx << " using Trapezoidal Method : ";
     cout << fixed << setprecision(3) << calcError(f_traped, f_ans[idx]) << " %\n";
 
-    cout << "Error for function f" << idx << " using Romberg Method     : ";
+    cout << "Error for Function f" << idx << " using Romberg Method     : ";
     cout << fixed << setprecision(3) << calcError(f_romberg, f_ans[idx]) << " %\n\n";
+    cout << string(72, '-') << '\n';
 }
 
 int main()
