@@ -23,7 +23,7 @@ Berikut adalah penjelasan bagian-bagian dari program kami
 
 ![power](images/func_power.jpeg)
 
-Function di atas berfungsi untuk menghitung perpangkatan menggunakan konsep yang mirip dengan [*Modular Exponentiation*](https://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/), sehingga kompleksitas waktunya adalah $ O(logN) $.
+Function di atas berfungsi untuk menghitung perpangkatan menggunakan konsep yang mirip dengan [*Modular Exponentiation*](https://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/), sehingga kompleksitas waktunya adalah ![logN](images/equation_logN.png).
 
 ![func_traped](images/func_trapezoidal.jpeg)
 
@@ -43,7 +43,7 @@ Berikut adalah keterangan nama-nama variabel yang digunakan pada function **trap
 * **a :** batas bawah integral
 * **b :** batas atas integral
 * **n :** banyak pembagian / banyak pias
-* **h :** selisih antar nilai x ($ \Delta x $)
+* **h :** selisih antar nilai x (![dx](images/equation_dx.png))
 * **r :** hasil perhitungan integral
 
 ![f123](images/func_f.jpeg)
@@ -56,7 +56,7 @@ Function di atas berfungsi untuk menghitung *Error* yang didapatkan dari perhitu
 
 ![f_ans](images/arr_ans.jpeg)
 
-Array di atas berfungsi untuk menyimpan hasil-hasil perhitungan integral secara analitik, index ke-*i* menyimpan hasil perhitungan integral dari $ f_i $.
+Array di atas berfungsi untuk menyimpan hasil-hasil perhitungan integral secara analitik, index ke-*i* menyimpan hasil perhitungan integral dari ![f_i](images/equation_fi.png).
 
 ![solve](images/void_solve.jpeg)
 
